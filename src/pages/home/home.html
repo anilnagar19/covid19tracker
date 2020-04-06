@@ -1,17 +1,129 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+		 refreshingText="Refreshing..."></ion-refresher-content>
+	</ion-refresher>
+	<h4 class="text-center">COVID-19 TRACKER</h4>
+	<ion-searchbar (ionInput)="getStateSearchData($event)"></ion-searchbar>
+	<div class="col-12">
+		<ion-badge color="primary">Last Updated: {{totalCase.lastupdatedtime}}</ion-badge>
+		<ion-grid>
+			<ion-row>
+				<ion-col col-6>
+					<div class="card border-danger">
+						<div class="card-body text-danger">
+							<h5 class="card-title">CONFIRMED</h5>
+							<p class="card-text">{{totalCase.confirmed}}
+								<span class="arrow" *ngIf="totalCase.deltaconfirmed !=='0'">
+									[<ion-icon name="arrow-round-up"></ion-icon>
+									+{{totalCase.deltaconfirmed}}]
+								</span>
+							</p>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col col-6>
+					<div class="card border-primary">
+						<div class="card-body text-primary">
+							<h5 class="card-title">ACTIVE</h5>
+							<p class="card-text">{{totalCase.active}}
+							</p>
+						</div>
+					</div>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col col-6>
+					<div class="card border-success">
+						<div class="card-body text-success">
+							<h5 class="card-title">RECOVERED</h5>
+							<p class="card-text">{{totalCase.recovered}}
+								<span class="arrow" *ngIf="totalCase.deltarecovered !=='0'">
+									[<ion-icon name="arrow-round-up"></ion-icon>
+									+{{totalCase.deltarecovered}}]
+								</span>
+							</p>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col col-6>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">DECEASED</h5>
+							<p class="card-text">{{totalCase.deaths}}
+								<span class="arrow" *ngIf="totalCase.deltadeaths !==0">
+									[<ion-icon name="arrow-round-up"></ion-icon>
+									+{{totalCase.deltadeaths}}]
+								</span>
+							</p>
+						</div>
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+	<div *ngFor="let state of stateWiseData" (click)="viewDistrict(state.state)">
+		<ion-card *ngIf="state.statecode !== 'TT'">
+			<ion-item>
+				<ion-avatar item-start>
+					<span>{{state.statecode}}</span>
+				</ion-avatar>
+				<h2> {{state.state}}</h2>
+				<p>{{state.lastupdatedtime}}</p>
+			</ion-item>
+
+			<ion-row style="margin:0">
+				<ion-col text-center class="text-danger">
+					<div>
+						<div>
+							CONFIRMED
+						</div>
+						<div>
+							{{state.confirmed}}
+							<span class="arrow" *ngIf="state.deltaconfirmed !=='0'">
+								[<ion-icon name="arrow-round-up"></ion-icon>
+								+{{state.deltaconfirmed}}]
+							</span>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col text-center class="text-success">
+
+					<div>
+						ACTIVE
+					</div>
+					<div>
+						{{state.active}}
+					</div>
+				</ion-col>
+				<ion-col text-center class="text-primary">
+					<div>
+						RECOVERED
+					</div>
+					<div>
+						{{state.recovered}}
+						<span class="arrow" *ngIf="totalCase.deltarecovered !=='0'">
+							[<ion-icon name="arrow-round-up"></ion-icon>
+							+{{state.deltarecovered}}]
+						</span>
+					</div>
+
+				</ion-col>
+				<ion-col text-center>
+					<div>
+						DECEASED
+					</div>
+					<div>
+						{{state.deaths}}
+						<span class="arrow" *ngIf="totalCase.deltadeaths !=='0'">
+							[<ion-icon name="arrow-round-up"></ion-icon>
+							+{{state.deltadeaths}}]
+						</span>
+					</div>
+
+				</ion-col>
+			</ion-row>
+		</ion-card>
+	</div>
 </ion-content>
