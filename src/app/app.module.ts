@@ -8,7 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DistrictPage } from '../pages/district/district';
+import { DistrictPageModule } from '../pages/district/district.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,10 +19,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 		AboutPage,
 		ContactPage,
 		HomePage,
-		TabsPage,
-		DistrictPage
+		TabsPage
 	],
 	imports: [
+		DistrictPageModule,
 		BrowserModule,
 		HttpClientModule,
 		IonicModule.forRoot(MyApp)
@@ -33,8 +33,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 		AboutPage,
 		ContactPage,
 		HomePage,
-		TabsPage,
-		DistrictPage
+		TabsPage
 	],
 	providers: [
 		StatusBar,

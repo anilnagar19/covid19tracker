@@ -1,4 +1,10 @@
 page-about {
 	a,h2{white-space: normal;}
-
+	ion-avatar {
+		line-height: 40px;
+		text-align: center;
+		background: #3F51B5;
+		border-radius: 50%;
+		color: #fff;
+	}
 }

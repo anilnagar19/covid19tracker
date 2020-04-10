@@ -1,40 +1,66 @@
-<ion-header>
-	<ion-navbar>
-		<ion-title>
-			Important Links
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content>
-	<ion-card>
-		<ion-item>
-			<h2> HELPLINE NUMBERS [BY STATE]</h2>
-			<p><a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf">HTTPS://WWW.MOHFW.GOV.IN/PDF/CORONVAVIRUSHELPLINENUMBER.PDF</a></p>
-		</ion-item>
-	</ion-card>
-	<ion-card>
-		<ion-item>
-			<h2> MINISTRY OF HEALTH AND FAMILY WELFARE, GOV. OF INDIA</h2>
-			<p><a href="https://www.mohfw.gov.in/">HTTPS://WWW.MOHFW.GOV.IN/</a></p>
-		</ion-item>
-	</ion-card>
-	<ion-card>
-		<ion-item>
-			<h2> WHO : COVID-19 HOME PAGE</h2>
-			<p><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019">HTTPS://WWW.WHO.INT/EMERGENCIES/DISEASES/NOVEL-CORONAVIRUS-2019</a></p>
-		</ion-item>
-	</ion-card>
-	<ion-card>
-		<ion-item>
-			<h2> CDC</h2>
-			<p><a href="https://www.cdc.gov/coronavirus/2019-ncov/faq.html">HTTPS://WWW.CDC.GOV/CORONAVIRUS/2019-NCOV/FAQ.HTML</a></p>
-		</ion-item>
-	</ion-card>
-	<ion-card>
-		<ion-item>
-			<h2> COVID-19 GLOBAL TRACKER</h2>
-			<p><a href="https://coronavirus.thebaselab.com/">HTTPS://CORONAVIRUS.THEBASELAB.COM/</a></p>
-		</ion-item>
-	</ion-card>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+		 refreshingText="Refreshing..."></ion-refresher-content>
+	</ion-refresher>
+	<h4 class="text-center">COVID-19 WORLD TRACKER</h4>
+	<ion-searchbar (ionInput)="getCountrySearchData($event)"></ion-searchbar>
+
+	<div *ngFor="let country of countriesData">
+		<ion-card>
+			<ion-item>
+				<ion-avatar item-start>
+					<span>{{country.country.substring(0, 2) | uppercase}}</span>
+				</ion-avatar>
+				<h2> {{country.country}}</h2>
+				<p>{{country.Last_Update}}</p>
+			</ion-item>
+
+			<ion-row style="margin:0">
+				<ion-col text-center class="text-danger">
+					<div>
+						<div>
+							CONFIRMED
+						</div>
+						<div>
+							{{country.totalConfirmed}}
+							<span class="arrow">
+							</span>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col text-center class="text-success">
+
+					<div>
+						ACTIVE
+					</div>
+					<div>
+						{{country.totalConfirmed - (country.totalRecovered + country.totalDeath)}}
+					</div>
+				</ion-col>
+				<ion-col text-center class="text-primary">
+					<div>
+						RECOVERED
+					</div>
+					<div>
+						{{country.totalRecovered}}
+						<span class="arrow">
+						</span>
+					</div>
+
+				</ion-col>
+				<ion-col text-center>
+					<div>
+						DECEASED
+					</div>
+					<div>
+						{{country.totalDeath}}
+						<span class="arrow">
+						</span>
+					</div>
+
+				</ion-col>
+			</ion-row>
+		</ion-card>
+	</div>
 </ion-content>
