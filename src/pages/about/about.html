@@ -2,7 +2,7 @@
 	<ion-navbar color="primary">
 		<ion-title class="text-center">COVID-19 TRACKER</ion-title>
 		<ion-toolbar>
-			<ion-searchbar (ionInput)="getCountrySearchData($event)"></ion-searchbar>
+			<ion-searchbar (ionInput)="getCountrySearchData($event)" [(ngModel)]="searchText"></ion-searchbar>
 		</ion-toolbar>
 	</ion-navbar>
 </ion-header>

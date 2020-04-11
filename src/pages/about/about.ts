@@ -12,10 +12,13 @@ export class AboutPage {
 	countriesData: any = [];
 	tempCountryData: any = [];
 
+	searchText: string = '';
+
 	constructor(public navCtrl: NavController, private http: HttpClient, private loadingCtrl: LoadingController) { }
 
 	ionViewDidEnter() {
 		this.getCoronaData();
+		this.searchText = '';
 	}
 
 	getCoronaData(refresher?) {
@@ -59,7 +62,6 @@ export class AboutPage {
 			}
 			this.loading.dismiss();
 			this.loading = null;
-
 		});
 	}
 

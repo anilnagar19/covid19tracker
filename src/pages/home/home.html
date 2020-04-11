@@ -3,7 +3,7 @@
 		<ion-title class="text-center">COVID-19 TRACKER</ion-title>
 
 		<ion-toolbar>
-			<ion-searchbar (ionInput)="getStateSearchData($event)"></ion-searchbar>
+			<ion-searchbar (ionInput)="getStateSearchData($event)" [(ngModel)]="searchText"></ion-searchbar>
 		</ion-toolbar>
 	</ion-navbar>
 </ion-header>

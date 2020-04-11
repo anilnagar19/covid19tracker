@@ -16,6 +16,8 @@ export class HomePage {
 	tempStateData: any = [];
 	stateWiseData: any = [];
 
+	searchText: string = '';
+
 	constructor(public navCtrl: NavController, private http: HttpClient, private loadingCtrl: LoadingController) { }
 
 	ionViewDidEnter() {
@@ -37,6 +39,7 @@ export class HomePage {
 			if (refresher) {
 				refresher.complete();
 			}
+			this.searchText = '';
 		})
 	}
 
