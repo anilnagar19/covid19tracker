@@ -1,41 +1,64 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-
+import { LoadingController } from 'ionic-angular';
+import { WorldDetailPage } from '../world-detail/world-detail';
 @Component({
 	selector: 'page-about',
 	templateUrl: 'about.html'
 })
 export class AboutPage {
+	loading: any;
 	countriesData: any = [];
 	tempCountryData: any = [];
 
-	constructor(public navCtrl: NavController, private http: HttpClient) {
+	constructor(public navCtrl: NavController, private http: HttpClient, private loadingCtrl: LoadingController) { }
+
+	ionViewDidEnter() {
+		this.getCoronaData();
+	}
+
+	getCoronaData(refresher?) {
+		if (!this.loading) {
+			this.loading = this.loadingCtrl.create({
+				content: 'Loading'
+			});
+			this.loading.present();
+		}
 		this.getWorldData().subscribe((res: any) => {
 
 			let Filtereddata = [];
 
 			this.filterData(res.data).then((res) => {
 				Object.keys(res).forEach((key) => {
-					var totalConfirmed = res[key].value.reduce(function (prev, cur) {
+					let totalConfirmed = res[key].value.reduce((prev, cur) => {
 						return prev + cur.Confirmed;
 					}, 0);
-					var totalRecovered = res[key].value.reduce(function (prev, cur) {
+					let totalRecovered = res[key].value.reduce((prev, cur) => {
 						return prev + cur.Recovered;
 					}, 0);
-					var totalDeath = res[key].value.reduce(function (prev, cur) {
+					let totalDeath = res[key].value.reduce((prev, cur) => {
 						return prev + cur.Deaths;
+					}, 0);
+					let Last_Update = res[key].value.reduce((prev, cur) => {
+						return cur.Last_Update;
 					}, 0);
 
 					res[key].totalDeath = totalDeath;
 					res[key].totalConfirmed = totalConfirmed;
 					res[key].totalRecovered = totalRecovered;
+					res[key].Last_Update = Last_Update;
 
 					Filtereddata.push(res[key]);
 					this.countriesData = Filtereddata;
 					this.tempCountryData = Filtereddata;
 				});
 			});
+			if (refresher) {
+				refresher.complete();
+			}
+			this.loading.dismiss();
+			this.loading = null;
 
 		});
 	}
@@ -72,4 +95,11 @@ export class AboutPage {
 		}
 	}
 
+	viewDetail(city) {
+		this.navCtrl.push(WorldDetailPage, { data: city.value });
+	}
+
+	doRefresh(refresher) {
+		this.getCoronaData(refresher);
+	}
 }

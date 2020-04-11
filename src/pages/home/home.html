@@ -1,10 +1,19 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title class="text-center">COVID-19 TRACKER</ion-title>
+
+		<ion-toolbar>
+			<ion-searchbar (ionInput)="getStateSearchData($event)"></ion-searchbar>
+		</ion-toolbar>
+	</ion-navbar>
+</ion-header>
+
 <ion-content>
 	<ion-refresher (ionRefresh)="doRefresh($event)">
 		<ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
 		 refreshingText="Refreshing..."></ion-refresher-content>
 	</ion-refresher>
-	<h4 class="text-center">COVID-19 TRACKER</h4>
-	<ion-searchbar (ionInput)="getStateSearchData($event)"></ion-searchbar>
+
 	<div class="col-12">
 		<ion-badge color="primary">Last Updated: {{totalCase.lastupdatedtime}}</ion-badge>
 		<ion-grid>

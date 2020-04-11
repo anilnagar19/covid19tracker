@@ -9,6 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DistrictPageModule } from '../pages/district/district.module';
+import { WorldDetailPageModule } from '../pages/world-detail/world-detail.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 	],
 	imports: [
 		DistrictPageModule,
+		WorldDetailPageModule,
 		BrowserModule,
 		HttpClientModule,
 		IonicModule.forRoot(MyApp)

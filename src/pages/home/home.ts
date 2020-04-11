@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
+import { LoadingController } from 'ionic-angular';
 
 import { DistrictPage } from '../district/district';
 
@@ -9,19 +10,30 @@ import { DistrictPage } from '../district/district';
 	templateUrl: 'home.html'
 })
 export class HomePage {
-	stateWiseData: any = [];
+	loading: any;
 	totalCase: any = {};
-	tempStateData: any = []
 	districtData: any = [];
+	tempStateData: any = [];
+	stateWiseData: any = [];
 
-	constructor(public navCtrl: NavController, private http: HttpClient) {
+	constructor(public navCtrl: NavController, private http: HttpClient, private loadingCtrl: LoadingController) { }
+
+	ionViewDidEnter() {
 		this.getStateData();
 		this.getDistrictData();
 	}
 
 	getDistrictData(refresher?) {
+		if (!this.loading) {
+			this.loading = this.loadingCtrl.create({
+				content: 'Loading'
+			});
+			this.loading.present();
+		}
 		this.getDistrictWiseData().subscribe((res) => {
 			this.districtData = res;
+			this.loading.dismiss();
+			this.loading = null;
 			if (refresher) {
 				refresher.complete();
 			}
@@ -59,8 +71,10 @@ export class HomePage {
 	}
 
 	viewDistrict(state) {
-		let data = this.districtData[state].districtData;
-		this.navCtrl.push(DistrictPage, { data: data });
+		if (this.districtData[state]) {
+			let data = this.districtData[state].districtData;
+			this.navCtrl.push(DistrictPage, { data: data });
+		}
 	}
 
 	doRefresh(refresher) {
